@@ -1,1 +1,1 @@
-# lintify
+# WarnPlan
