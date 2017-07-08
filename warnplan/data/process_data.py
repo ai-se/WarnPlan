@@ -23,7 +23,7 @@ if __name__ == "__main__":
         feature_dframe = pd.read_csv(p)
         label_dframe = pd.read_csv(l, header=None)
         dframe=pd.concat([feature_dframe[selected_label_id], label_dframe[label_dframe.columns[0]]], axis=1)
-        dframe_all=pd.concat([feature_dframe, label_dframe[label_dframe.columns[0]]], axis=1)
+        # dframe_all=pd.concat([feature_dframe, label_dframe[label_dframe.columns[0]]], axis=1)
 
         # "Only select features"
         # if not os.path.isdir(re.sub("Raw", "processed",
@@ -32,11 +32,10 @@ if __name__ == "__main__":
         # dframe.to_csv(re.sub("Raw", "processed", "/".join(
         #                 p.split("/")[:-1])+".csv"), index=False,
         #                 header=selected_label_id+["status"])
-        set_trace()
         "All features"
         if not os.path.isdir(re.sub("Raw", "all_features",
                             "/".join(p.split("/")[:-2]))):
             os.mkdir(re.sub("Raw", "all_features", "/".join(p.split("/")[:-2])))
-        dframe_all.to_csv(re.sub("Raw", "all_features", "/".join(
+        feature_dframe.to_csv(re.sub("Raw", "all_features", "/".join(
                         p.split("/")[:-1])+".csv"), index=False,
-                        header=dframe_all.columns.tolist()[:-1]+["status"])
+                        header=feature_dframe.columns.tolist()[:-1]+["status"])
