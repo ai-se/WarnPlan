@@ -10,7 +10,7 @@ from pdb import set_trace
 
 set_trace()
 # Update path
-root = os.path.join(os.getcwd().split('/warnplan')[0], 'warnplan')
+root = os.path.join(os.getcwd().split('warnplan')[0], 'warnplan/warnplan')
 if root not in sys.path:
     sys.path.append(root)
 
