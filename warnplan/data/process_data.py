@@ -38,5 +38,4 @@ if __name__ == "__main__":
             os.mkdir(re.sub("Raw", "all_features", "/".join(p.split("/")[:-2])))
         # set_trace()
         feature_dframe.to_csv(re.sub("Raw", "all_features", "/".join(
-                        p.split("/")[:-1])+".csv"), index=False,
-                        header=feature_dframe.columns.tolist()[:-1]+["status"])
+                        p.split("/")[:-1])+".csv"), index=False)
