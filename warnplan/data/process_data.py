@@ -4,7 +4,6 @@ import pandas as pd
 from glob2 import glob
 from pdb import set_trace
 
-
 if __name__ == "__main__":
     all_features = "totalFeatures.csv"
     all_labels = "labelAll.csv"
@@ -26,4 +25,4 @@ if __name__ == "__main__":
         dframe=pd.concat([feature_dframe[selected_label_id], label_dframe[label_dframe.columns[0]]], axis=1)
         if not os.path.isdir(re.sub("Raw", "processed", "/".join(p.split("/")[:-2]))):
             os.mkdir(re.sub("Raw", "processed", "/".join(p.split("/")[:-2])))
-        dframe.to_csv(re.sub("Raw", "processed", "/".join(p.split("/")[:-1])+".csv"), index=False, header=selected_label_tag+["status"])
+        dframe.to_csv(re.sub("Raw", "processed", "/".join(p.split("/")[:-1])+".csv"), index=False, header=selected_label_id+["status"])
