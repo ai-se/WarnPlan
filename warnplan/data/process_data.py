@@ -32,7 +32,7 @@ if __name__ == "__main__":
         # dframe.to_csv(re.sub("Raw", "processed", "/".join(
         #                 p.split("/")[:-1])+".csv"), index=False,
         #                 header=selected_label_id+["status"])
-
+        set_trace()
         "All features"
         if not os.path.isdir(re.sub("Raw", "all_features",
                             "/".join(p.split("/")[:-2]))):
