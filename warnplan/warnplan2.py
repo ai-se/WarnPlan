@@ -56,7 +56,7 @@ def planning():
             test = test[train.columns]
             validation = validation[train.columns]
 
-            set_trace()
+            # set_trace()
 
             "Recommend changes with XTREE"
             new = xtree(train[train.columns[1:]], test)
