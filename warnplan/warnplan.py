@@ -25,8 +25,9 @@ warnings.filterwarnings("ignore")
 
 def planning():
     data = get_all_projects(features="processed")
-
+    results = dict()
     for proj, paths in data.iteritems():
+        results.update({proj: []})
         for train, test, validation in TrainTestValidate.split(paths.data):
 
             "Convert to pandas type dataframe"
@@ -35,7 +36,7 @@ def planning():
             validation = list2dataframe(validation)
 
             "Recommend changes with XTREE"
-            new, changes = xtree(train[train.columns[1:]], test)
+            new = xtree(train[train.columns[1:]], test)
 
             """
             Have the changes been implemented?" 
@@ -47,11 +48,28 @@ def planning():
             "Group the smaller dframe and the patched dframe by their file names"
             modules = list(set(closed_in_validation["Name"].tolist()))
 
+            heeded = []
             for module_name in modules:
-                module_name_val = closed_in_validation[closed_in_validation["Name"].isin([module_name])]
+                count = []
                 module_name_new = new[new["Name"].isin([module_name])]
-                set_trace()
-            "Find the deltas between patched and smaller validation dframe"
+                module_name_act = train[train["Name"].isin([module_name])]
+                module_name_val = closed_in_validation[closed_in_validation["Name"].isin([module_name])]
+                for col_name in module_name_val.columns[1:-1]:
+                    aa = module_name_new[col_name]
+                    bb = module_name_val[col_name]
+                    try:
+                        ranges = sorted(eval(aa.values.tolist()[0]))
+                        count.append(any([abs(ranges[0]) <= bbb <= abs(ranges[1]) for bbb in bb.tolist()]))
+                    except TypeError:
+                        count.append(any([bbb == aa.values[0] for bbb in bb.tolist()]))
+                    except IndexError:
+                        pass
+                if len(count) > 0:
+                    heeded.append(sum(count)/len(count))
+        results[proj]= heeded
+        percentiles = np.percentile(results[proj], [25, 50, 75])
+        print("{}\t{}\t{}\t{}".format(proj[:5], percentiles[0], percentiles[1], percentiles[2]))
+        "Find the deltas between patched and smaller validation dframe"
 
 if __name__ == "__main__":
     planning()

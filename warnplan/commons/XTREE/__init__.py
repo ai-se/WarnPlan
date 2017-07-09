@@ -87,13 +87,14 @@ class Patches:
                     sorted(
                         [l for l in leaves if l.score <= 0.01 * current.score],
                         key=lambda F: i.howfar(current, F))[
-                        0]
+                        1]
         except:
             return testInst.values.tolist()[0]
 
         def new(old, range):
             rad = abs(min(range[1] - old, old - range[1]))
-            return uniform(range[0], range[1])
+            return abs(range[0]), abs(range[1])
+            # return uniform(range[0], range[1])
 
         for ii in best.branch:
             before = testInst[ii[0]]
@@ -101,12 +102,12 @@ class Patches:
                 then = testInst[ii[0]].values[0]
                 now = ii[1] if i.config else new(testInst[ii[0]].values[0],
                                                  ii[1])
-                # print(current.branch,best.branch)
-                testInst[ii[0]] = now
-                C.save(name=ii[0], old=then, new=now)
+                # print(now)
+                testInst[ii[0]] = str(now)
+                # C.save(name=ii[0], old=then, new=now)
 
         testInst[testInst.columns[-1]] = 1
-        i.change.append(C.log)
+        # i.change.append(C.log)
         return testInst.values.tolist()[0]
 
     def main(i):
@@ -127,7 +128,7 @@ def xtree(train_df, test_df):
     if isinstance(test_df, basestring):
         test_df = list2dataframe([test_df])  # create a pandas dataframe of testing data.dat
 
-    train_df = SMOTE(train_df, atleast=1000, atmost=1001)
+    # train_df = SMOTE(train_df, atleast=1000, atmost=1001)
 
     tree = pyC45.dtree(train_df)  # Create a decision tree
 
@@ -136,7 +137,7 @@ def xtree(train_df, test_df):
 
     modified = patch.main()
 
-    return modified, patch.change
+    return modified
 
 
 if __name__ == '__main__':
