@@ -31,6 +31,26 @@ def planning():
         results.update({proj: []})
         for train, test, validation in TrainTestValidate.split(paths.data):
 
+            "Find overlaping columns"
+            train = list2dataframe(train)
+            test = list2dataframe(test)
+            validation =list2dataframe(validation)
+            columns = set(train.columns)
+            for s in [test.columns, validation.columns]:
+                columns.intersection_update(s)
+
+            columns = list(columns)
+
+            for i, f in enumerate(columns):
+                if f == 'F55':
+                    columns.insert(0, columns.pop(i))
+                if f == 'category':
+                    columns.append(columns.pop(i))
+
+            train = train[columns]
+            test = train[columns]
+            validation = train[columns]
+
             "Convert to pandas type dataframe"
             train = rfe_select(list2dataframe(train))
             test = list2dataframe(test)[train.columns]
@@ -40,7 +60,7 @@ def planning():
             new = xtree(train[train.columns[1:]], test)
 
             """
-            " Have the changes been implemented? "
+                " Have the changes been implemented? 
             """
 
             "Create a smaller dframe of all closed issues in validation set"
