@@ -10,13 +10,15 @@ Igor Kononenko: On Biases in Estimating Multi-Valued Attributes. In: 14th Intern
 Dougherty, James, Ron Kohavi, and Mehran Sahami. "Supervised and unsupervised discretization of continuous features." Machine learning: proceedings of the twelfth international conference. Vol. 12. 1995.
 """
 from __future__ import division, print_function
-import pandas as pd
-from collections import Counter
+
 from misc import *
 import numpy as np
+import pandas as pd
 from pdb import set_trace
+from collections import Counter
+from sklearn.feature_selection import RFE
+from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier as CART
-
 
 def fWeight(tbl):
     """
@@ -31,6 +33,7 @@ def fWeight(tbl):
     except ValueError:
         set_trace()
     return [tbl.columns[i] for i in np.argsort(lbs)[::-1]]
+
 
 
 def discretize(feature, klass, atleast=-1, discrete=False):

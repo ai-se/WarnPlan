@@ -12,7 +12,7 @@ class _Data:
     """Hold training and testing data.dat"""
 
     def __init__(self, data_group, data_name):
-        dir = os.path.join(root, "data/processed/")
+        dir = os.path.join(root, "data", data_group)
 
         self.data = glob(os.path.abspath(os.path.join(dir, data_name, "*.csv")))
 
