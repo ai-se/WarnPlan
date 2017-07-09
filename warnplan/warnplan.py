@@ -68,7 +68,8 @@ def planning():
                     heeded.append(sum(count)/len(count))
         results[proj]= heeded
         percentiles = np.percentile(results[proj], [25, 50, 75])
-        print("{}\t{}\t{}\t{}".format(proj[:5], percentiles[0], percentiles[1], percentiles[2]))
+        print("{}\t{}\t{}\t{}".format(proj, percentiles[0], percentiles[1], percentiles[2]))
+        set_trace()
         "Find the deltas between patched and smaller validation dframe"
 
 if __name__ == "__main__":
