@@ -14,12 +14,10 @@ if root not in sys.path:
 
 import pandas as pd
 from tools import pyC45
-from pdb import set_trace
-from oracle.smote import SMOTE
 from Utils.MiscUtils import flatten
 from Utils.ExperimentUtils import Changes
 from Utils.FileUtil import list2dataframe
-from random import uniform, random as rand
+from random import uniform
 
 
 class Patches:

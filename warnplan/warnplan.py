@@ -33,7 +33,6 @@ def planning():
             train = list2dataframe(train)
             test = list2dataframe(test)
             validation = list2dataframe(validation)
-            set_trace()
 
             "Recommend changes with XTREE"
             new, changes = xtree(train[train.columns[1:]], test)
