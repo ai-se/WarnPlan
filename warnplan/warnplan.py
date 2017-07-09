@@ -8,77 +8,34 @@ import os
 import sys
 from pdb import set_trace
 
-set_trace()
 # Update path
 root = os.path.join(os.getcwd().split('warnplan')[0], 'warnplan/warnplan')
 if root not in sys.path:
     sys.path.append(root)
 
 import numpy as np
-from Data.DefectPrediction import DefectData
+from data.GetData import get_all_projects
 from Utils.FileUtil import list2dataframe
 from commons.XTREE import xtree
+from Utils.StatsUtils.CrossVal import TrainTestValidate
 
-
-from oracle.model import rforest, xgboost
-from Utils.ExperimentUtils import pred_stats, impact
-from sklearn.model_selection import train_test_split
-from Utils.StatsUtils.CrossVal import CrossValidation
 import warnings
 warnings.filterwarnings("ignore")
 
 
-def transfer_lessons(data=None):
-    if data is None:
-        data = DefectData.get_all_projects()["Apache"]
+def planning():
+    data = get_all_projects(features="processed")
 
     for proj, paths in data.iteritems():
-        "Make sure we don't test on the bellwether dataset"
 
-        if proj in ["ant", "ivy", "poi", "jedit"]:
-            res = {proj[:6]: {
-                "xtree_local": [],
-                "xtree_bellw": [],
-                "alves": [],
-                "olive": [],
-                "shatw": []}
-            }
+        for train, test, validation in TrainTestValidate.split(paths):
 
-            bellw = list2dataframe(data[paths.bellw].data)
-            test = list2dataframe(paths.data)
-            test_local = list2dataframe(paths.data[-1])
-            train_local = list2dataframe(paths.data[:-1])
+            set_trace()
 
-            for train_bellw, validation in CrossValidation.split(bellw,
-                                                                 ways=5):
+            "Recommend changes with XTREE"
 
-                patched_xtree, _ = xtree(train_bellw, test_local)
-                patched_xtree_local, _ = xtree(train_local, test_local)
+            "Have the changes been implemented?"
 
-                # How good are the patches from Alves?
-                pred_alves, distr_alves = xgboost(validation, patched_alves)
-
-                # How good are the patches from Shatnawi?
-                pred_shatw, distr_shatw = xgboost(validation, patched_shatw)
-
-                # How good are the patches from Oliveira?
-                pred_olive, distr_olive = xgboost(validation, patched_olive)
-
-                # How good are the patches from the bellwether XTREE?
-                pred_xtree, distr_xtree = xgboost(validation, patched_xtree)
-
-                # How good are the patches from the local XTREE?
-                pred_xtree_local, distr_xtree_local = xgboost(validation,
-                                                              patched_xtree_local)
-
-                res[proj[:6]]["alves"].append(impact(test, pred_alves))
-                res[proj[:6]]["shatw"].append(impact(test, pred_shatw))
-                res[proj[:6]]["olive"].append(impact(test, pred_olive))
-                res[proj[:6]]["xtree_bellw"].append(impact(test, pred_xtree))
-                res[proj[:6]]["xtree_local"].append(
-                    impact(test, pred_xtree_local))
-
-            yield res
 
 
 
@@ -128,4 +85,4 @@ def apache():
     set_trace()
 
 if __name__ == "__main__":
-    apache()
+    planning()
