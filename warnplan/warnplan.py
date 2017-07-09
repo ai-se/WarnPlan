@@ -28,62 +28,31 @@ def planning():
 
     for proj, paths in data.iteritems():
         for train, test, validation in TrainTestValidate.split(paths.data):
+
+            "Convert to pandas type dataframe"
             train = list2dataframe(train)
             test = list2dataframe(test)
             validation = list2dataframe(validation)
             set_trace()
 
             "Recommend changes with XTREE"
+            new, changes = xtree(train[train.columns[1:]], test)
 
-            "Have the changes been implemented?"
+            """
+            Have the changes been implemented?" 
+            """
 
+            "Create a smaller dframe of all closed issues in validation set"
+            closed_in_validation = validation[validation['category'].isin([0])]
 
+            "Group the smaller dframe and the patched dframe by their file names"
+            modules = list(set(closed_in_validation["Name"].tolist()))
 
-
-def apache():
-    print("Apache")
-    reps = dict()
-    import random
-
-    for n in xrange(1):
-        for res in transfer_lessons():
-            random.seed(n)  # Set a new seed for every run
-
-            if not res.keys()[0] in reps.keys():
-                reps.update({res.keys()[0]: res[res.keys()[0]]})
-            else:
-                reps[res.keys()[0]]["xtree_local"].extend(
-                    res[res.keys()[0]]["xtree_local"])
-                reps[res.keys()[0]]["xtree_bellw"].extend(
-                    res[res.keys()[0]]["xtree_bellw"])
-                reps[res.keys()[0]]["alves"].extend(
-                    res[res.keys()[0]]["alves"])
-                reps[res.keys()[0]]["shatw"].extend(
-                    res[res.keys()[0]]["shatw"])
-                reps[res.keys()[0]]["olive"].extend(
-                    res[res.keys()[0]]["olive"])
-
-    for n, (key, value) in enumerate(reps.iteritems()):
-        print(n + 1
-              , key
-              , np.median(value["xtree_bellw"], axis=0)
-              , np.percentile(value["xtree_bellw"], 25, axis=0)
-              , np.percentile(value["xtree_bellw"], 75, axis=0)
-              , np.median(value["xtree_local"], axis=0)
-              , np.percentile(value["xtree_local"], 25, axis=0)
-              , np.percentile(value["xtree_local"], 75, axis=0)
-              , np.median(value["alves"], axis=0)
-              , np.percentile(value["alves"], 25, axis=0)
-              , np.percentile(value["alves"], 75, axis=0)
-              , np.median(value["shatw"], axis=0)
-              , np.percentile(value["shatw"], 25, axis=0)
-              , np.percentile(value["shatw"], 75, axis=0)
-              , np.median(value["olive"], axis=0)
-              , np.percentile(value["olive"], 25, axis=0)
-              , np.percentile(value["olive"], 75, axis=0)
-              , sep="\t")
-
-    set_trace()
+            for module_name in modules:
+                module_name_val = closed_in_validation[closed_in_validation["Name"].isin([module_name])]
+                module_name_new = new[new["Name"].isin([module_name])]
+                set_trace()
+            "Find the deltas between patched and smaller validation dframe"
 
 if __name__ == "__main__":
     planning()
