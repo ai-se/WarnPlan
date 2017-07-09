@@ -32,6 +32,7 @@ def list2dataframe(lst):
         data = [read_csv(elem) for elem in lst]
     except:
         return read_csv(lst)
+
     return concat(data, ignore_index=True)
 
 

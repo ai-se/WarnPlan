@@ -37,9 +37,9 @@ class AllFeatures:
 def get_all_projects(features="processed"):
     all = dict()
     if features is "processed":
-            all.update({Processed.__name__.lower(): Processed().projects})
+            all.update(Processed().projects)
     if features is "all":
-            all.update({AllFeatures.__name__.lower(): AllFeatures().projects})
+            all.update(AllFeatures().projects)
 
     return all
 

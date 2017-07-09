@@ -27,9 +27,10 @@ def planning():
     data = get_all_projects(features="processed")
 
     for proj, paths in data.iteritems():
-
-        for train, test, validation in TrainTestValidate.split(paths):
-
+        for train, test, validation in TrainTestValidate.split(paths.data):
+            train = list2dataframe(train)
+            test = list2dataframe(test)
+            validation = list2dataframe(validation)
             set_trace()
 
             "Recommend changes with XTREE"
