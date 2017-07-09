@@ -42,7 +42,7 @@ def planning():
             columns = list(columns)
 
             for i, f in enumerate(columns):
-                if f == 'F55':
+                if f == 'Name':
                     columns.insert(0, columns.pop(i))
                 if f == 'category':
                     columns.append(columns.pop(i))
@@ -52,9 +52,9 @@ def planning():
             validation = train[columns]
 
             "Convert to pandas type dataframe"
-            train = rfe_select(list2dataframe(train))
-            test = list2dataframe(test)[train.columns]
-            validation = list2dataframe(validation)[train.columns]
+            train = rfe_select(train)
+            test = test[train.columns]
+            validation = validation[train.columns]
 
             "Recommend changes with XTREE"
             new = xtree(train[train.columns[1:]], test)
