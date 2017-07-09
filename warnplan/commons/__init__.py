@@ -91,7 +91,8 @@ class Patches:
 
         def new(old, range):
             rad = abs(min(range[1] - old, old - range[1]))
-            return uniform(range[0], range[1])
+            # return uniform(range[0], range[1])
+            return range[0], range[1]
 
         for ii in best.branch:
             before = testInst[ii[0]]
@@ -99,7 +100,7 @@ class Patches:
                 then = testInst[ii[0]].values[0]
                 now = ii[1] if i.config else new(testInst[ii[0]].values[0],
                                                  ii[1])
-                # print(current.branch,best.branch)
+                print(now)
                 testInst[ii[0]] = now
                 C.save(name=ii[0], old=then, new=now)
 
