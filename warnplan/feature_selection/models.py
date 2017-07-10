@@ -18,5 +18,5 @@ def rfe_select(tbl):
     selected_features.insert(0, "Name")
     selected_features.append("category")
     new_tbl = tbl[selected_features]
-    # new_tbl.columns = ["Name"] + selected_features[1:]
+
     return new_tbl
