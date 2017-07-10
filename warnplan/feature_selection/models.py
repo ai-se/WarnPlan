@@ -219,7 +219,9 @@ class CBFS:
                 break
 
         sbest = slist[slist[:, 2] > 0, :2]
-        print("\n#Features selected: {0}".format(len(sbest)))
-        print("Selected feature indices:\n{0}".format(sbest))
-        set_trace()
-        return sbest
+        selected_features = [int(ff) for ff in sbest[:, 1]]
+        selected_features.insert(0, "Name")
+        selected_features.append("category")
+        new_tbl = tbl[selected_features]
+
+        return new_tbl
