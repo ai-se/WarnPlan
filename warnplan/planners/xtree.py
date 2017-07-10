@@ -8,18 +8,18 @@ import os
 import sys
 
 # Update path
-root = os.path.join(os.getcwd().split('src')[0], 'src')
+root = os.path.join(os.getcwd().split('warnplan')[0], 'warnplan/warnplan')
 if root not in sys.path:
     sys.path.append(root)
 
 import pandas as pd
-from tools import pyC45
+from commons.tools import pyC45
 from pdb import set_trace
 from oracle.smote import SMOTE
-from Utils.MiscUtils import flatten
-from Utils.ExperimentUtils import Changes
-from Utils.FileUtil import list2dataframe
 from random import uniform, random as rand
+from commons.utils.MiscUtils import flatten
+from commons.utils.ExperimentUtils import Changes
+from commons.utils.FileUtil import list2dataframe
 
 
 class Patches:

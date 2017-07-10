@@ -14,7 +14,7 @@ if root not in sys.path:
     sys.path.append(root)
 
 import numpy as np
-from data.GetData import get_all_projects
+from data.get_data import get_all_projects
 from Utils.FileUtil import list2dataframe
 from commons.XTREE import xtree
 from Utils.StatsUtils.CrossVal import TrainTestValidate

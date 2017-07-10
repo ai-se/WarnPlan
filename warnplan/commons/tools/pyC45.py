@@ -9,7 +9,15 @@ Also uses,
 [3] Usama M. Fayyad, Keki B. Irani. "Multi-interval discretization of continuous valued attributes for classification learning." Thirteenth International Joint Conference on Artificial Intelligence, 1022-1027, 1993.
 
 """
-from __future__ import division, print_function
+from __future__ import print_function, division
+
+import os
+import sys
+
+# Update path
+root = os.path.join(os.getcwd().split('warnplan')[0], 'warnplan/warnplan')
+if root not in sys.path:
+    sys.path.append(root)
 
 from collections import Counter
 from pdb import set_trace
@@ -19,7 +27,7 @@ import pandas as pd
 
 from containers import Thing
 from misc import explore, csv2DF
-from tools.Discretize import discretize, fWeight
+from commons.tools.Discretize import discretize, fWeight
 
 
 def dtree(tbl, rows=None, lvl=-1, asIs=10 ** 32, up=None, klass=-1, branch=[],

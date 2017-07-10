@@ -16,8 +16,6 @@ import numpy as np
 import pandas as pd
 from pdb import set_trace
 from collections import Counter
-from sklearn.feature_selection import RFE
-from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier as CART
 
 def fWeight(tbl):

@@ -14,10 +14,10 @@ if root not in sys.path:
     sys.path.append(root)
 
 import numpy as np
-from data.GetData import get_all_projects
-from Utils.FileUtil import list2dataframe
-from commons.XTREE import xtree
-from Utils.StatsUtils.CrossVal import TrainTestValidate
+from data.get_data import get_all_projects
+from commons.utils.FileUtil import list2dataframe
+from planners.xtree import xtree
+from commons.utils.StatsUtils.CrossVal import TrainTestValidate
 
 import warnings
 warnings.filterwarnings("ignore")
@@ -48,11 +48,12 @@ def planning():
             "Group the smaller dframe and the patched dframe by their file names"
             modules = list(set(closed_in_validation["Name"].tolist()))
 
+
+            "Find the deltas between patched and smaller validation dframe"
             heeded = []
             for module_name in modules:
                 count = []
                 module_name_new = new[new["Name"].isin([module_name])]
-                module_name_act = train[train["Name"].isin([module_name])]
                 module_name_val = closed_in_validation[closed_in_validation["Name"].isin([module_name])]
                 for col_name in module_name_val.columns[1:-1]:
                     aa = module_name_new[col_name]
@@ -67,9 +68,10 @@ def planning():
                 if len(count) > 0:
                     heeded.append(sum(count)/len(count))
         results[proj]= heeded
+
+        "Print output"
         percentiles = np.percentile(results[proj], [25, 50, 75])
         print("{}\t{:0.2f}\t{:0.2f}\t{:0.2f}".format(proj[:5], percentiles[0], percentiles[1], percentiles[2]))
-        "Find the deltas between patched and smaller validation dframe"
 
 if __name__ == "__main__":
     planning()
