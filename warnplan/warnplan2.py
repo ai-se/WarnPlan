@@ -52,7 +52,8 @@ def planning():
             validation = train[columns]
 
             "Convert to pandas type dataframe"
-            train = Wrapper.rfe_select(train)
+            # train = Wrapper.rfe_select(train)
+            train = CBFS.feature_selection(train)
             test = test[train.columns]
             validation = validation[train.columns]
         #
