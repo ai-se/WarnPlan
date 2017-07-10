@@ -191,7 +191,6 @@ class CBFS:
         slist[:, 1] = idx
         if thresh < 0:
             thresh = np.median(slist[-1, 0])
-            print("Using minimum SU value as default threshold: {0}".format(thresh))
 
         slist = slist[slist[:, 0] > thresh, :]  # desc. ordered per SU[i,c]
 
@@ -220,6 +219,7 @@ class CBFS:
 
         sbest = slist[slist[:, 2] > 0, :2]
         selected_features = [int(ff) for ff in sbest[:, 1]]
+        selected_features = [numerical_columns[i] for i in selected_features]
         selected_features.insert(0, "Name")
         selected_features.append("category")
         new_tbl = tbl[selected_features]

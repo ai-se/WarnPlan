@@ -24,7 +24,7 @@ warnings.filterwarnings("ignore")
 
 
 def planning():
-    data = get_all_projects(features="processed")
+    data = get_all_projects(features="code")
     results = dict()
     for proj, paths in data.iteritems():
         results.update({proj: []})

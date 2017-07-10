@@ -33,6 +33,14 @@ class AllFeatures:
         for file in ['ant', 'cass', 'commons', 'derby', 'jmeter', 'lucene', 'mvn', 'tomcat']:
             self.projects.update({file: _Data(data_group="all_features", data_name=file)})
 
+class CodeFeatures:
+    "Code Churn Features"
+
+    def __init__(self):
+        self.projects = {}
+        for file in ['ant', 'cass', 'commons', 'derby', 'jmeter', 'lucene', 'mvn', 'tomcat']:
+            self.projects.update({file: _Data(data_group="code_features", data_name=file)})
+
 
 def get_all_projects(features="processed"):
     all = dict()
@@ -40,6 +48,8 @@ def get_all_projects(features="processed"):
             all.update(Processed().projects)
     if features is "all":
             all.update(AllFeatures().projects)
+    if features is "code":
+            all.update(CodeFeatures().projects)
 
     return all
 
