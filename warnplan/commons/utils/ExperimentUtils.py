@@ -4,13 +4,13 @@ import os
 import sys
 
 # Update path
-root = os.path.join(os.getcwd().split('src')[0], 'src')
+root = os.path.join(os.getcwd().split('warnplan')[0], 'warnplan/warnplan')
 if root not in sys.path:
     sys.path.append(root)
 
 import pandas as pd
 from random import uniform
-from Utils.StatsUtils.ABCD import abcd
+from commons.utils.StatsUtils.ABCD import abcd
 from random import uniform as random
 from pdb import set_trace
 import numpy as np

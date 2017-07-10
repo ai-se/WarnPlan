@@ -202,11 +202,12 @@ class CBFS:
         for i in xrange(m):
             q_su, q, q_idx = cls._get_next_element(slist, p_idx)
             if q:
+                # p, q = int(p), int(q)
                 while q:
                     if (p, q) in cache:
                         pq_su = cache[(p, q)]
                     else:
-                        pq_su = cls._symmetrical_uncertainty(X[:, p], X[:, q])
+                        pq_su = cls._symmetrical_uncertainty(X[:, int(p)], X[:, int(q)])
                         cache[(p, q)] = pq_su
 
                     if pq_su >= q_su:
@@ -218,6 +219,7 @@ class CBFS:
                 break
 
         sbest = slist[slist[:, 2] > 0, :2]
-
+        print("\n#Features selected: {0}".format(len(sbest)))
+        print("Selected feature indices:\n{0}".format(sbest))
         set_trace()
         return sbest

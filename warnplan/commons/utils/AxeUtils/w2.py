@@ -16,19 +16,15 @@ import os
 import sys
 
 # Update path
-root = os.path.join(os.getcwd().split('src')[0], 'src')
+root = os.path.join(os.getcwd().split('warnplan')[0], 'warnplan/warnplan')
 if root not in sys.path:
     sys.path.append(root)
 
 from pdb import set_trace
 
-from Utils.AxeUtils import atom
-try:
-    from tools.axe import nasa93
-except ImportError:
-    set_trace()
-
-from tools.axe.settingsWhere import *
+from commons.utils.AxeUtils import atom
+from commons.tools.axe import nasa93
+from commons.tools.axe.settingsWhere import *
 
 sys.dont_write_bytecode = True
 
