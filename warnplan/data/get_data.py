@@ -41,6 +41,14 @@ class CodeFeatures:
         for file in ['ant', 'cass', 'commons', 'derby', 'jmeter', 'lucene', 'mvn', 'tomcat']:
             self.projects.update({file: _Data(data_group="code_features", data_name=file)})
 
+class WarnFeatures:
+    "Code Churn Features"
+
+    def __init__(self):
+        self.projects = {}
+        for file in ['ant', 'cass', 'commons', 'derby', 'jmeter', 'lucene', 'mvn', 'tomcat']:
+            self.projects.update({file: _Data(data_group="warning", data_name=file)})
+
 
 def get_all_projects(features="processed"):
     all = dict()
@@ -50,6 +58,8 @@ def get_all_projects(features="processed"):
             all.update(AllFeatures().projects)
     if features is "code":
             all.update(CodeFeatures().projects)
+    if features is "warning":
+            all.update(WarnFeatures().projects)
 
     return all
 

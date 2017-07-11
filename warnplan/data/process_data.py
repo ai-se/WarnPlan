@@ -33,8 +33,9 @@ if __name__ == "__main__":
         dframe = feature_dframe[selected_label_id]
         code_dframe = pd.read_csv(re.sub("totalFeatures", "sourceCode", p))
         code_dframe_full = pd.concat([feature_dframe["F55"], code_dframe[code_dframe.columns[:-1]], feature_dframe["category"]], axis=1)
-        warn_dframe = pd.read_csv(re.sub("totalFeatures", "warningCombine", p))
-        warn_dframe_full = pd.concat([feature_dframe["F55"], code_dframe[code_dframe.columns[:-1]], feature_dframe["category"]], axis=1)
+        warn_comb_dframe = pd.read_csv(re.sub("totalFeatures", "warningCombine", p))
+        warn_hist_dframe = pd.read_csv(re.sub("totalFeatures", "warningHistory", p))
+        warn_dframe_full = pd.concat([feature_dframe["F55"], warn_comb_dframe[warn_comb_dframe.columns[:-1]], warn_hist_dframe[warn_hist_dframe.columns[:-1]], feature_dframe["category"]], axis=1)
 
 
         # "Only select features"
@@ -55,7 +56,7 @@ if __name__ == "__main__":
         # code_dframe_full.to_csv(re.sub("Raw", "code_features", "/".join(p.split("/")[:-1])+".csv"), index=False)
 
         "Warnings"
-        if not os.path.isdir(re.sub("Raw", "code_features",
+        if not os.path.isdir(re.sub("Raw", "warning",
                             "/".join(p.split("/")[:-2]))):
             os.mkdir(re.sub("Raw", "warning", "/".join(p.split("/")[:-2])))
 
